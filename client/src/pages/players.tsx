@@ -65,14 +65,14 @@ export default function Players() {
 
       <div className="grid grid-cols-1 gap-3">
         {players.map((player) => (
-          <div key={player.id} className="flex items-center justify-between p-3 bg-card/30 border border-white/5 rounded-lg hover:border-primary/30 transition-colors group">
+          <div key={player.id} className="flex items-center justify-between p-3 bg-card/30 border border-border/50 rounded-lg hover:border-primary/30 transition-colors group">
             <div className="flex items-center gap-3">
-              <Avatar className="border border-white/10">
+              <Avatar className="border border-border/50">
                 <AvatarFallback className="bg-secondary text-secondary-foreground font-bold">
                   {player.avatar}
                 </AvatarFallback>
               </Avatar>
-              <span className="font-medium text-lg text-white">{player.name}</span>
+              <span className="font-medium text-lg dark:text-white text-foreground">{player.name}</span>
             </div>
             {isAdmin && (
               <Button variant="ghost" size="icon" onClick={() => handleDelete(player.id)} className="opacity-0 group-hover:opacity-100 text-destructive hover:bg-destructive/10 transition-all">
