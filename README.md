@@ -68,11 +68,6 @@ A sleek, mobile-first web application for tracking FIFA FC26 match results among
 
 7. **Open** http://localhost:5000
 
-### Default Credentials
-
-- **Username**: `root`
-- **Password**: `R00t@FC26!Tr4ck3r`
-
 ## Production Deployment
 
 ### Using Docker Compose with Traefik
