@@ -39,7 +39,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="flex items-center gap-3">
             <img src={logoIcon} alt="FC26" className="w-8 h-8 rounded-sm" />
             <h1 className="text-xl font-bold tracking-wider text-white">
-              FC26 <span className="text-primary text-glow">TRACKER</span>
+              OMV FC26 <span className="text-primary text-glow">TRACKER</span>
             </h1>
           </div>
           {isAdmin ? (
