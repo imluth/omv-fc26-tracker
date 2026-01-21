@@ -61,7 +61,7 @@ export default function Dashboard() {
         </TabsList>
         
         <TabsContent value="standings" className="mt-4">
-          <Card className="bg-card/30 border-white/5">
+          <Card className="bg-card/30 border-border/50">
             <CardContent className="p-0">
               <div className="relative overflow-x-auto">
                 <table className="w-full text-sm text-left rtl:text-right text-muted-foreground">
@@ -76,9 +76,9 @@ export default function Dashboard() {
                   </thead>
                   <tbody>
                     {stats.map((stat, index) => (
-                      <tr key={stat.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                      <tr key={stat.id} className="border-b border-border/50 hover:bg-muted/50 transition-colors">
                         <td className="px-4 py-3 font-medium text-foreground">#{index + 1}</td>
-                        <td className="px-4 py-3 font-bold text-white">{stat.name}</td>
+                        <td className="px-4 py-3 font-bold dark:text-white text-foreground">{stat.name}</td>
                         <td className="px-4 py-3 text-center">{stat.wins}-{stat.losses}</td>
                         <td className="px-4 py-3 text-right text-primary font-mono">{stat.winRate}%</td>
                         <td className="px-4 py-3 text-right">
@@ -104,16 +104,16 @@ export default function Dashboard() {
         </TabsContent>
         
         <TabsContent value="history" className="mt-4">
-           <Card className="bg-card/30 border-white/5">
-             <CardHeader className="pb-2 border-b border-white/5">
+           <Card className="bg-card/30 border-border/50">
+             <CardHeader className="pb-2 border-b border-border/50">
                 <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                   <History className="w-4 h-4" /> Match History
                 </CardTitle>
              </CardHeader>
              <CardContent className="p-0">
-               <div className="divide-y divide-white/5">
+               <div className="divide-y divide-border/50">
                  {matches.map((match) => (
-                   <div key={match.id} className="p-4 flex items-center justify-between hover:bg-white/5 transition-colors group">
+                   <div key={match.id} className="p-4 flex items-center justify-between hover:bg-muted/50 transition-colors group">
                      <div className="flex flex-col gap-1 w-full">
                        <div className="flex items-center justify-between w-full">
                           <div className={cn("flex items-center gap-2", match.score1 > match.score2 ? "text-primary font-bold" : "text-muted-foreground")}>

@@ -14,7 +14,7 @@ interface PlayerStatCardProps {
 
 export function PlayerStatCard({ rank, name, initials, winRate, matches, className }: PlayerStatCardProps) {
   return (
-    <Card className={cn("bg-card/50 border-white/5 overflow-hidden group hover:border-primary/50 transition-colors", className)}>
+    <Card className={cn("bg-card/50 border-border/50 overflow-hidden group hover:border-primary/50 transition-colors", className)}>
       <CardContent className="p-4 flex items-center gap-4">
         <div className="relative">
           <Avatar className="h-12 w-12 border-2 border-border group-hover:border-primary transition-colors">
@@ -33,7 +33,7 @@ export function PlayerStatCard({ rank, name, initials, winRate, matches, classNa
         </div>
         
         <div className="flex-1 min-w-0">
-          <h3 className="font-display text-lg font-bold truncate text-white">{name}</h3>
+          <h3 className="font-display text-lg font-bold truncate dark:text-white text-foreground">{name}</h3>
           <p className="text-xs text-muted-foreground">{matches} Matches</p>
         </div>
 
