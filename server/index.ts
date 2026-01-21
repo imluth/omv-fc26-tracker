@@ -10,6 +10,9 @@ import { pool } from "./db";
 const app = express();
 const httpServer = createServer(app);
 
+// Trust proxy for secure cookies behind Traefik/nginx
+app.set("trust proxy", 1);
+
 declare module "http" {
   interface IncomingMessage {
     rawBody: unknown;
