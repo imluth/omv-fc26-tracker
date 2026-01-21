@@ -27,8 +27,8 @@ import { Swords } from "lucide-react";
 const formSchema = z.object({
   player1: z.string().min(1, "Player 1 is required"),
   player2: z.string().min(1, "Player 2 is required"),
-  score1: z.string().transform(val => parseInt(val, 10)).pipe(z.number().min(0).max(99)),
-  score2: z.string().transform(val => parseInt(val, 10)).pipe(z.number().min(0).max(99)),
+  score1: z.coerce.number().min(0).max(99),
+  score2: z.coerce.number().min(0).max(99),
 }).refine((data) => data.player1 !== data.player2, {
   message: "Players must be different",
   path: ["player2"],
