@@ -35,8 +35,8 @@ services:
     environment:
       NODE_ENV: production
       PORT: 5000
-      DATABASE_URL: postgresql://fc26:${DB_PASSWORD}@db:5432/fc26_tracker
-      SESSION_SECRET: ${SESSION_SECRET}
+      DATABASE_URL: "postgresql://fc26:${DB_PASSWORD}@db:5432/fc26_tracker"
+      SESSION_SECRET: "${SESSION_SECRET}"
     networks:
       - internal
       - traefik-public
