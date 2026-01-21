@@ -1,0 +1,70 @@
+FC26 Match Tracker - Product Requirements Document
+Overview
+A lightweight, self-hosted web application for tracking 1v1 FIFA FC26 match results among colleagues. The app records match outcomes, maintains player statistics, and displays a leaderboard to encourage friendly competition.
+Problem Statement
+Daily FC26 matches at work have no way to track who's winning or losing over time. Without historical records, matches lack the competitive edge that comes from tracked standings and bragging rights.
+Goals
+
+Record match results quickly and easily
+Display a live leaderboard showing player rankings
+Mobile-first design — primary usage is on phones near the TV
+Keep it simple — no tournament brackets, no complex features
+Self-hostable with Docker for internal office use
+
+Users
+
+Admin: Single user who manages players and records match results
+Viewers: Anyone who can access the leaderboard (read-only, no auth required)
+
+Core Features
+1. Player Management
+FieldTypeRequiredNameStringYesAvatar/InitialsAuto-generatedNo
+Actions:
+
+Add new player
+Edit player name
+Delete player (soft delete to preserve match history)
+
+2. Match Recording
+FieldTypeRequiredPlayer 1Select from playersYesPlayer 2Select from playersYesPlayer 1 ScoreInteger (0-99)YesPlayer 2 ScoreInteger (0-99)YesDate/TimeTimestampAuto
+Validation:
+
+Player 1 ≠ Player 2
+Scores must be different (no draws in FIFA)
+Winner determined automatically from scores
+
+Actions:
+
+Record new match
+Edit recent match (within 24 hours)
+Delete match (admin only)
+
+3. Leaderboard
+Display columns:
+
+Rank
+Player name
+Matches played
+Wins
+Losses
+Win rate (%)
+Current streak (W3, L2, etc.)
+
+Sorting: By win rate (minimum 3 matches to rank), then by total wins
+Additional views:
+
+Head-to-head record between any two players
+Recent matches list (last 10)
+
+4. Simple Dashboard
+
+Today's matches
+Top 3 players highlight
+Total matches played (all time)
+"Record Match" quick action button
+
+5. Authentication
+
+Single admin password (environment variable)
+Admin login required for: adding players, recording matches, editing, deleting
+Leaderboard is public (no login needed to view)
