@@ -1,20 +1,20 @@
 import { useState } from "react";
-import { useStore } from "@/lib/store";
+import { useStore } from "@/lib/api-store";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Users, Plus, Trash2 } from "lucide-react";
+import { Users, Plus, Trash2, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useLocation } from "wouter";
 
 export default function Players() {
-  const { players, addPlayer, deletePlayer, isAdmin } = useStore();
+  const { players, addPlayer, deletePlayer, isAdmin, isLoading } = useStore();
   const { toast } = useToast();
   const [newPlayerName, setNewPlayerName] = useState("");
   const [_, setLocation] = useLocation();
 
-  const handleAddPlayer = (e: React.FormEvent) => {
+  const handleAddPlayer = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isAdmin) {
       toast({ title: "Unauthorized", variant: "destructive" });
@@ -24,16 +24,25 @@ export default function Players() {
       toast({ title: "Name too short", variant: "destructive" });
       return;
     }
-    addPlayer(newPlayerName.trim());
-    setNewPlayerName("");
-    toast({ title: "Player added" });
+
+    const success = await addPlayer(newPlayerName.trim());
+    if (success) {
+      setNewPlayerName("");
+      toast({ title: "Player added" });
+    } else {
+      toast({ title: "Failed to add player", variant: "destructive" });
+    }
   };
 
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
     if (!isAdmin) return;
     if (window.confirm("Are you sure? This will hide the player but keep stats.")) {
-      deletePlayer(id);
-      toast({ title: "Player removed" });
+      const success = await deletePlayer(id);
+      if (success) {
+        toast({ title: "Player removed" });
+      } else {
+        toast({ title: "Failed to remove player", variant: "destructive" });
+      }
     }
   };
 
@@ -55,8 +64,8 @@ export default function Players() {
                 onChange={(e) => setNewPlayerName(e.target.value)}
                 className="bg-background/50 border-primary/20 focus-visible:ring-primary"
               />
-              <Button type="submit" size="icon" className="bg-primary text-primary-foreground hover:bg-primary/90">
-                <Plus className="w-5 h-5" />
+              <Button type="submit" size="icon" className="bg-primary text-primary-foreground hover:bg-primary/90" disabled={isLoading}>
+                {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Plus className="w-5 h-5" />}
               </Button>
             </form>
           </CardContent>

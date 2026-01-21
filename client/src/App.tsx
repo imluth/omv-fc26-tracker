@@ -8,6 +8,8 @@ import RecordMatch from "@/pages/record-match";
 import Players from "@/pages/players";
 import AdminLogin from "@/pages/admin-login";
 import NotFound from "@/pages/not-found";
+import { useStore } from "@/lib/api-store";
+import { useEffect } from "react";
 
 function Router() {
   return (
@@ -24,6 +26,15 @@ function Router() {
 }
 
 function App() {
+  const { fetchPlayers, fetchMatches, checkAuth } = useStore();
+
+  useEffect(() => {
+    // Initialize data on app mount
+    checkAuth();
+    fetchPlayers();
+    fetchMatches();
+  }, [checkAuth, fetchPlayers, fetchMatches]);
+
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider defaultTheme="dark">

@@ -1,6 +1,6 @@
 import { Link, useLocation } from "wouter";
 import { Trophy, Users, PlusCircle, LogOut, Shield } from "lucide-react";
-import { useStore } from "@/lib/store";
+import { useStore } from "@/lib/api-store";
 import { Button } from "@/components/ui/button";
 import { Toaster } from "@/components/ui/toaster";
 import { ModeToggle } from "@/components/mode-toggle";
@@ -11,6 +11,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
   const { isAdmin, logout } = useStore();
 
+  const handleLogout = async () => {
+    await logout();
+  };
+
   const navItems = [
     { href: "/", icon: Trophy, label: "Leaderboard" },
     { href: "/record", icon: PlusCircle, label: "Record" },
@@ -18,9 +22,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   ];
 
   return (
-    <div className="min-h-screen bg-background font-sans text-foreground selection:bg-primary selection:text-primary-foreground relative overflow-hidden transition-colors duration-300">
+    <div className="min-h-screen bg-background font-sans text-foreground selection:bg-primary selection:text-primary-foreground relative transition-colors duration-300">
       {/* Background Image Layer (Dark Only) */}
-      <div 
+      <div
         className="fixed inset-0 z-0 opacity-20 pointer-events-none hidden dark:block"
         style={{
           backgroundImage: `url(${bgImage})`,
@@ -29,7 +33,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           backgroundRepeat: 'no-repeat'
         }}
       />
-      
+
       {/* Gradient Overlay */}
       <div className="fixed inset-0 z-0 bg-gradient-to-b from-background/80 via-background/90 to-background pointer-events-none" />
 
@@ -46,7 +50,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="flex items-center gap-1">
             <ModeToggle />
             {isAdmin ? (
-              <Button variant="ghost" size="icon" onClick={logout} className="text-muted-foreground hover:text-destructive">
+              <Button variant="ghost" size="icon" onClick={handleLogout} className="text-muted-foreground hover:text-destructive">
                 <LogOut className="w-5 h-5" />
               </Button>
             ) : (
@@ -60,38 +64,38 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </header>
 
         {/* Main Content */}
-        <main className="flex-1 p-4 pb-24 overflow-y-auto scrollbar-hide">
+        <main className="flex-1 p-4 pb-20 overflow-y-auto">
           {children}
         </main>
-
-        {/* Bottom Navigation (Mobile First) */}
-        <nav className="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-card/90 backdrop-blur-lg border-t border-border/40 p-2 z-50">
-          <ul className="flex justify-around items-center">
-            {navItems.map((item) => {
-              const isActive = location === item.href;
-              return (
-                <li key={item.href}>
-                  <Link href={item.href}>
-                    <div 
-                      className={`flex flex-col items-center gap-1 p-2 rounded-lg transition-all duration-300 ${
-                        isActive 
-                          ? "text-primary scale-110" 
-                          : "text-muted-foreground hover:text-foreground"
-                      }`}
-                    >
-                      <item.icon 
-                        className={`w-6 h-6 ${isActive ? "drop-shadow-[0_0_8px_rgba(34,197,94,0.6)]" : ""}`} 
-                        strokeWidth={isActive ? 2.5 : 2}
-                      />
-                      <span className="text-[10px] font-medium tracking-wide uppercase">{item.label}</span>
-                    </div>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
       </div>
+
+      {/* Bottom Navigation - Fixed to viewport */}
+      <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-card/95 backdrop-blur-lg border-t border-x border-border/40 p-2 z-50 safe-area-bottom">
+        <ul className="flex justify-around items-center">
+          {navItems.map((item) => {
+            const isActive = location === item.href;
+            return (
+              <li key={item.href}>
+                <Link href={item.href}>
+                  <div
+                    className={`flex flex-col items-center gap-1 p-2 rounded-lg transition-all duration-300 ${
+                      isActive
+                        ? "text-primary scale-110"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    <item.icon
+                      className={`w-6 h-6 ${isActive ? "drop-shadow-[0_0_8px_rgba(34,197,94,0.6)]" : ""}`}
+                      strokeWidth={isActive ? 2.5 : 2}
+                    />
+                    <span className="text-[10px] font-medium tracking-wide uppercase">{item.label}</span>
+                  </div>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
       <Toaster />
     </div>
   );

@@ -2,7 +2,7 @@ import { useStats } from "@/hooks/use-stats";
 import { PlayerStatCard } from "@/components/player-card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useStore } from "@/lib/store";
+import { useStore } from "@/lib/api-store";
 import { formatDistanceToNow } from "date-fns";
 import { TrendingUp, History, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -16,12 +16,15 @@ export default function Dashboard() {
   const top3 = stats.slice(0, 3);
 
   const getPlayerName = (id: string) => players.find(p => p.id === id)?.name || "Unknown";
-  // const getPlayerAvatar = (id: string) => players.find(p => p.id === id)?.avatar || "??"; // Unused for now
 
-  const handleDeleteMatch = (id: string) => {
+  const handleDeleteMatch = async (id: string) => {
     if (window.confirm("Delete this match record?")) {
-      deleteMatch(id);
-      toast({ title: "Match deleted" });
+      const success = await deleteMatch(id);
+      if (success) {
+        toast({ title: "Match deleted" });
+      } else {
+        toast({ title: "Failed to delete match", variant: "destructive" });
+      }
     }
   };
 

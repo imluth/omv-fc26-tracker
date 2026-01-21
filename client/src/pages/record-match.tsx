@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useStore } from "@/lib/store";
+import { useStore } from "@/lib/api-store";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -22,7 +22,7 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { useLocation } from "wouter";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Swords } from "lucide-react";
+import { Swords, Loader2 } from "lucide-react";
 
 const formSchema = z.object({
   player1: z.string().min(1, "Player 1 is required"),
@@ -38,7 +38,7 @@ const formSchema = z.object({
 });
 
 export default function RecordMatch() {
-  const { players, addMatch, isAdmin } = useStore();
+  const { players, addMatch, isAdmin, isLoading } = useStore();
   const { toast } = useToast();
   const [_, setLocation] = useLocation();
 
@@ -52,7 +52,7 @@ export default function RecordMatch() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     if (!isAdmin) {
       toast({
         title: "Unauthorized",
@@ -61,13 +61,20 @@ export default function RecordMatch() {
       });
       return;
     }
-    
-    addMatch(values.player1, values.player2, values.score1, values.score2);
-    toast({
-      title: "Match Recorded!",
-      description: "The leaderboard has been updated.",
-    });
-    setLocation("/");
+
+    const success = await addMatch(values.player1, values.player2, values.score1, values.score2);
+    if (success) {
+      toast({
+        title: "Match Recorded!",
+        description: "The leaderboard has been updated.",
+      });
+      setLocation("/");
+    } else {
+      toast({
+        title: "Failed to record match",
+        variant: "destructive",
+      });
+    }
   }
 
   if (!isAdmin) {
@@ -76,9 +83,9 @@ export default function RecordMatch() {
         <div className="p-4 bg-muted rounded-full">
           <Swords className="w-8 h-8 text-muted-foreground" />
         </div>
-        <h2 className="text-xl font-bold">Admin Access Required</h2>
-        <p className="text-muted-foreground max-w-xs">You need to log in as an admin to record official match results.</p>
-        <Button onClick={() => setLocation("/admin")} variant="outline">Login as Admin</Button>
+        <h2 className="text-xl font-bold">Root Access Required</h2>
+        <p className="text-muted-foreground max-w-xs">You need to log in as an root to record official match results.</p>
+        <Button onClick={() => setLocation("/admin")} variant="outline">I am root</Button>
       </div>
     );
   }
@@ -180,8 +187,19 @@ export default function RecordMatch() {
                 </div>
               </div>
 
-              <Button type="submit" className="w-full h-12 text-lg font-bold font-display tracking-widest bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-[1.02] transition-all">
-                CONFIRM RESULT
+              <Button
+                type="submit"
+                className="w-full h-12 text-lg font-bold font-display tracking-widest bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-[1.02] transition-all"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    RECORDING...
+                  </>
+                ) : (
+                  "CONFIRM RESULT"
+                )}
               </Button>
             </form>
           </Form>

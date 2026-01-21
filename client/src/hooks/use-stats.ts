@@ -1,4 +1,4 @@
-import { useStore } from "@/lib/store";
+import { useStore } from "@/lib/api-store";
 import { useMemo } from "react";
 
 export interface PlayerStats {
