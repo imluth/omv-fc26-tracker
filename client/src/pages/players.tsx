@@ -84,7 +84,7 @@ export default function Players() {
               <span className="font-medium text-lg dark:text-white text-foreground">{player.name}</span>
             </div>
             {isAdmin && (
-              <Button variant="ghost" size="icon" onClick={() => handleDelete(player.id)} className="opacity-0 group-hover:opacity-100 text-destructive hover:bg-destructive/10 transition-all">
+              <Button variant="ghost" size="icon" onClick={() => handleDelete(player.id)} className="opacity-60 hover:opacity-100 text-destructive hover:bg-destructive/10 transition-all">
                 <Trash2 className="w-4 h-4" />
               </Button>
             )}

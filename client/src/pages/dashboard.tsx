@@ -134,10 +134,10 @@ export default function Dashboard() {
                            {formatDistanceToNow(new Date(match.timestamp), { addSuffix: true })}
                          </div>
                          {isAdmin && (
-                           <Button 
-                             variant="ghost" 
-                             size="icon" 
-                             className="h-6 w-6 text-destructive opacity-0 group-hover:opacity-100 transition-opacity"
+                           <Button
+                             variant="ghost"
+                             size="icon"
+                             className="h-6 w-6 text-destructive opacity-60 hover:opacity-100 hover:bg-destructive/10 transition-all"
                              onClick={() => handleDeleteMatch(match.id)}
                            >
                              <Trash2 className="w-3 h-3" />
