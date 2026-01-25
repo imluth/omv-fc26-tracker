@@ -85,15 +85,23 @@ export function useStats() {
       streakType: p.streak > 0 ? 'W' : 'L',
       streak: Math.abs(p.streak)
     })).sort((a, b) => {
-      // Sort by Win Rate (min 3 matches), then Wins
+      // 1. Qualification (Primary): minimum 3 matches to be considered for top ranks
       const aQualifies = a.matchesPlayed >= 3;
       const bQualifies = b.matchesPlayed >= 3;
 
       if (aQualifies && !bQualifies) return -1;
       if (!aQualifies && bQualifies) return 1;
 
+      // 2. Total Wins (Secondary): More wins = higher rank (rewards volume)
+      if (b.wins !== a.wins) return b.wins - a.wins;
+
+      // 3. Win Rate (Tertiary): If same wins, higher win rate wins
       if (b.winRate !== a.winRate) return b.winRate - a.winRate;
-      return b.wins - a.wins;
+
+      // 4. Goal Difference (Tie-breaker): Better goal difference wins
+      const aGD = a.goalsScored - a.goalsConceded;
+      const bGD = b.goalsScored - b.goalsConceded;
+      return bGD - aGD;
     });
 
   }, [players, matches]);
