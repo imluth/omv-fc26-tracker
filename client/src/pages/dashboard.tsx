@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useStore } from "@/lib/api-store";
 import { formatDistanceToNow } from "date-fns";
-import { TrendingUp, History, Trash2, Target } from "lucide-react";
+import { TrendingUp, History, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
@@ -115,11 +115,6 @@ export default function Dashboard() {
 
         <TabsContent value="topscores" className="mt-4">
           <Card className="bg-card/30 border-border/50">
-            <CardHeader className="pb-2 border-b border-border/50">
-              <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                <Target className="w-4 h-4" /> Top Goal Scorers
-              </CardTitle>
-            </CardHeader>
             <CardContent className="p-0">
               <div className="relative overflow-x-auto">
                 <table className="w-full text-sm text-left rtl:text-right text-muted-foreground">
