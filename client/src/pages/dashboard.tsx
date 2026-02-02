@@ -1,10 +1,11 @@
+import { useMemo } from "react";
 import { useStats } from "@/hooks/use-stats";
 import { PlayerStatCard } from "@/components/player-card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useStore } from "@/lib/api-store";
 import { formatDistanceToNow } from "date-fns";
-import { TrendingUp, History, Trash2 } from "lucide-react";
+import { TrendingUp, History, Trash2, Target } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
@@ -14,6 +15,11 @@ export default function Dashboard() {
   const { matches, players, isAdmin, deleteMatch } = useStore();
   const { toast } = useToast();
   const top3 = stats.slice(0, 3);
+
+  // Top scorers sorted by goals scored (descending)
+  const topScorers = useMemo(() => {
+    return [...stats].sort((a, b) => b.goalsScored - a.goalsScored);
+  }, [stats]);
 
   const getPlayerName = (id: string) => players.find(p => p.id === id)?.name || "Unknown";
 
@@ -58,8 +64,9 @@ export default function Dashboard() {
 
       {/* Tabs for Table / History */}
       <Tabs defaultValue="standings" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 bg-muted/50 p-1 rounded-lg">
+        <TabsList className="grid w-full grid-cols-3 bg-muted/50 p-1 rounded-lg">
           <TabsTrigger value="standings" className="font-display tracking-wider data-[state=active]:bg-card data-[state=active]:text-primary">STANDINGS</TabsTrigger>
+          <TabsTrigger value="topscores" className="font-display tracking-wider data-[state=active]:bg-card data-[state=active]:text-primary">TOP SCORES</TabsTrigger>
           <TabsTrigger value="history" className="font-display tracking-wider data-[state=active]:bg-card data-[state=active]:text-primary">RECENT MATCHES</TabsTrigger>
         </TabsList>
         
@@ -105,7 +112,48 @@ export default function Dashboard() {
             </CardContent>
           </Card>
         </TabsContent>
-        
+
+        <TabsContent value="topscores" className="mt-4">
+          <Card className="bg-card/30 border-border/50">
+            <CardHeader className="pb-2 border-b border-border/50">
+              <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                <Target className="w-4 h-4" /> Top Goal Scorers
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-0">
+              <div className="relative overflow-x-auto">
+                <table className="w-full text-sm text-left rtl:text-right text-muted-foreground">
+                  <thead className="text-xs uppercase bg-muted/50 text-foreground font-display">
+                    <tr>
+                      <th scope="col" className="px-4 py-3 rounded-tl-lg">Rank</th>
+                      <th scope="col" className="px-4 py-3">Player</th>
+                      <th scope="col" className="px-4 py-3 text-center">Goals</th>
+                      <th scope="col" className="px-4 py-3 text-right rounded-tr-lg">Matches</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {topScorers.map((stat, index) => (
+                      <tr key={stat.id} className="border-b border-border/50 hover:bg-muted/50 transition-colors">
+                        <td className="px-4 py-3 font-medium text-foreground">#{index + 1}</td>
+                        <td className="px-4 py-3 font-bold dark:text-white text-foreground">{stat.name}</td>
+                        <td className="px-4 py-3 text-center">
+                          <span className="text-primary font-mono font-bold">{stat.goalsScored}</span>
+                        </td>
+                        <td className="px-4 py-3 text-right text-muted-foreground">{stat.matchesPlayed}</td>
+                      </tr>
+                    ))}
+                    {topScorers.length === 0 && (
+                      <tr>
+                        <td colSpan={4} className="p-8 text-center text-muted-foreground">No stats available.</td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
         <TabsContent value="history" className="mt-4">
            <Card className="bg-card/30 border-border/50">
              <CardHeader className="pb-2 border-b border-border/50">
