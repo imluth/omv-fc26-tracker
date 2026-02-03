@@ -32,9 +32,9 @@ export function PlayerStatCard({ rank, name, initials, winRate, matches, classNa
           </Avatar>
           <div className={cn(
             "absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold border border-background",
-            rank === 1 ? "bg-yellow-500 text-black" :
-            rank === 2 ? "bg-gray-300 text-black" :
-            rank === 3 ? "bg-amber-700 text-white" : "bg-secondary text-secondary-foreground"
+            rank === 1 ? "bg-yellow-500 text-black medal-gold" :
+            rank === 2 ? "bg-gray-300 text-black medal-silver" :
+            rank === 3 ? "bg-amber-700 text-white medal-bronze" : "bg-secondary text-secondary-foreground"
           )}>
             {rank}
           </div>

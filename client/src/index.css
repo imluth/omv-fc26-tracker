@@ -169,3 +169,27 @@
 .particle:nth-child(6) { left: 80%; top: 80%; animation-delay: 5s; }
 .particle:nth-child(7) { left: 90%; top: 25%; animation-delay: 6s; }
 .particle:nth-child(8) { left: 15%; top: 85%; animation-delay: 7s; }
+
+/* Medal shimmer animation */
+@keyframes medal-shimmer {
+  0%, 100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.3);
+  }
+}
+
+.medal-gold {
+  animation: medal-shimmer 2s ease-in-out infinite;
+}
+
+.medal-silver {
+  animation: medal-shimmer 2.5s ease-in-out infinite;
+  animation-delay: 0.5s;
+}
+
+.medal-bronze {
+  animation: medal-shimmer 3s ease-in-out infinite;
+  animation-delay: 1s;
+}
