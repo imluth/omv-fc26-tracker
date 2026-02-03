@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useStore } from "@/lib/api-store";
 import { formatDistanceToNow } from "date-fns";
-import { TrendingUp, History, Trash2 } from "lucide-react";
+import { TrendingUp, History, Trash2, Flame, Snowflake } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
@@ -96,9 +96,15 @@ export default function Dashboard() {
                         <td className="px-4 py-3 text-right text-primary font-mono">{stat.winRate}%</td>
                         <td className="px-4 py-3 text-right">
                           <span className={cn(
-                            "px-2 py-0.5 rounded text-[10px] font-bold",
+                            "px-2 py-0.5 rounded text-[10px] font-bold inline-flex items-center gap-1",
                             stat.streakType === 'W' ? "bg-primary/20 text-primary" : "bg-destructive/20 text-destructive"
                           )}>
+                            {stat.streakType === 'W' && stat.streak >= 3 && (
+                              <Flame className="w-3 h-3 animate-pulse" />
+                            )}
+                            {stat.streakType === 'L' && stat.streak >= 3 && (
+                              <Snowflake className="w-3 h-3 animate-pulse" />
+                            )}
                             {stat.streakType}{stat.streak}
                           </span>
                         </td>
