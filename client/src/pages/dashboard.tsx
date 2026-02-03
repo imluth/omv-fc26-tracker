@@ -172,12 +172,12 @@ export default function Dashboard() {
                      <div className="flex flex-col gap-1 w-full">
                        <div className="flex items-center justify-between w-full">
                           <div className={cn("flex items-center gap-2", match.score1 > match.score2 ? "text-primary font-bold" : "text-muted-foreground")}>
-                            <span className="w-6 text-right font-mono text-lg">{match.score1}</span>
+                            <span className={cn("w-6 text-right font-mono text-xl", match.score1 > match.score2 && "score-glow")}>{match.score1}</span>
                             <span className="text-sm">{getPlayerName(match.player1Id)}</span>
                           </div>
                           <span className="text-xs text-muted-foreground/50 font-mono">VS</span>
                           <div className={cn("flex items-center gap-2 flex-row-reverse", match.score2 > match.score1 ? "text-primary font-bold" : "text-muted-foreground")}>
-                            <span className="w-6 font-mono text-lg">{match.score2}</span>
+                            <span className={cn("w-6 font-mono text-xl", match.score2 > match.score1 && "score-glow")}>{match.score2}</span>
                             <span className="text-sm">{getPlayerName(match.player2Id)}</span>
                           </div>
                        </div>
