@@ -34,6 +34,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         }}
       />
 
+      {/* Floating Particles (Dark Only) */}
+      <div className="fixed inset-0 z-0 pointer-events-none hidden dark:block overflow-hidden">
+        <div className="particle" />
+        <div className="particle" />
+        <div className="particle" />
+        <div className="particle" />
+        <div className="particle" />
+        <div className="particle" />
+        <div className="particle" />
+        <div className="particle" />
+      </div>
+
       {/* Gradient Overlay */}
       <div className="fixed inset-0 z-0 bg-gradient-to-b from-background/80 via-background/90 to-background pointer-events-none" />
 
