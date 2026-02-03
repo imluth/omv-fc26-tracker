@@ -16,9 +16,12 @@ export default function Dashboard() {
   const { toast } = useToast();
   const top3 = stats.slice(0, 3);
 
-  // Top scorers sorted by goals scored (descending)
+  // Top scorers sorted by goals scored (descending), then by matches played (descending) as tiebreaker
   const topScorers = useMemo(() => {
-    return [...stats].sort((a, b) => b.goalsScored - a.goalsScored);
+    return [...stats].sort((a, b) => {
+      if (b.goalsScored !== a.goalsScored) return b.goalsScored - a.goalsScored;
+      return b.matchesPlayed - a.matchesPlayed;
+    });
   }, [stats]);
 
   const getPlayerName = (id: string) => players.find(p => p.id === id)?.name || "Unknown";
