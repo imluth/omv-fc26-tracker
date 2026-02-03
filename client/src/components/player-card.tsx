@@ -13,11 +13,19 @@ interface PlayerStatCardProps {
 }
 
 export function PlayerStatCard({ rank, name, initials, winRate, matches, className }: PlayerStatCardProps) {
+  // Tier ring colors based on win rate
+  const getTierRingClass = () => {
+    if (winRate >= 70) return "border-yellow-500 shadow-[0_0_8px_rgba(234,179,8,0.5)]";
+    if (winRate >= 50) return "border-gray-300 shadow-[0_0_8px_rgba(209,213,219,0.4)]";
+    if (winRate >= 30) return "border-amber-700 shadow-[0_0_8px_rgba(180,83,9,0.4)]";
+    return "border-border";
+  };
+
   return (
     <Card className={cn("bg-card/50 border-border/50 overflow-hidden group hover:border-primary/50 transition-colors", className)}>
       <CardContent className="p-4 flex items-center gap-4">
         <div className="relative">
-          <Avatar className="h-12 w-12 border-2 border-border group-hover:border-primary transition-colors">
+          <Avatar className={cn("h-12 w-12 border-2 transition-all", getTierRingClass())}>
             <AvatarFallback className="bg-secondary text-secondary-foreground font-display font-bold text-lg">
               {initials}
             </AvatarFallback>
