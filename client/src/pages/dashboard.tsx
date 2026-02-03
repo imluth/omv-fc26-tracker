@@ -106,11 +106,11 @@ export default function Dashboard() {
                 <table className="w-full text-sm text-left rtl:text-right text-muted-foreground">
                   <thead className="text-xs uppercase bg-muted/50 text-foreground font-display">
                     <tr>
-                      <th scope="col" className="px-4 py-3 rounded-tl-lg">Rank</th>
-                      <th scope="col" className="px-4 py-3">Player</th>
-                      <th scope="col" className="px-4 py-3 text-center">W-L</th>
-                      <th scope="col" className="px-4 py-3 text-right">Rate</th>
-                      <th scope="col" className="px-4 py-3 text-right rounded-tr-lg">Strk</th>
+                      <th scope="col" className="px-2 py-2 rounded-tl-lg">#</th>
+                      <th scope="col" className="px-2 py-2">Player</th>
+                      <th scope="col" className="px-2 py-2 text-center">W-L</th>
+                      <th scope="col" className="px-2 py-2 text-right">Rate</th>
+                      <th scope="col" className="px-2 py-2 text-right rounded-tr-lg">Strk</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -120,22 +120,22 @@ export default function Dashboard() {
                         className="border-b border-border/50 hover:bg-muted/50 transition-colors animate-in fade-in slide-in-from-left-2"
                         style={{ animationDelay: `${index * 50}ms`, animationFillMode: 'backwards' }}
                       >
-                        <td className="px-4 py-3 font-medium text-foreground">#{index + 1}</td>
-                        <td className="px-4 py-3 font-bold dark:text-white text-foreground">
-                          <div className="flex items-center gap-1.5">
-                            {stat.name}
+                        <td className="px-2 py-2 font-medium text-foreground">{index + 1}</td>
+                        <td className="px-2 py-2 font-bold dark:text-white text-foreground">
+                          <div className="flex items-center gap-1">
+                            <span className="truncate">{stat.name}</span>
                             {getAchievements(stat.id, index).map((badge, i) => (
                               <badge.icon
                                 key={i}
-                                className={cn("w-3.5 h-3.5", badge.color)}
+                                className={cn("w-3 h-3 flex-shrink-0", badge.color)}
                                 title={badge.title}
                               />
                             ))}
                           </div>
                         </td>
-                        <td className="px-4 py-3 text-center">{stat.wins}-{stat.losses}</td>
-                        <td className="px-4 py-3 text-right text-primary font-mono">{stat.winRate}%</td>
-                        <td className="px-4 py-3 text-right">
+                        <td className="px-2 py-2 text-center">{stat.wins}-{stat.losses}</td>
+                        <td className="px-2 py-2 text-right text-primary font-mono">{stat.winRate}%</td>
+                        <td className="px-2 py-2 text-right">
                           <span className={cn(
                             "px-2 py-0.5 rounded text-[10px] font-bold inline-flex items-center gap-1",
                             stat.streakType === 'W' ? "bg-primary/20 text-primary" : "bg-destructive/20 text-destructive"
@@ -170,10 +170,10 @@ export default function Dashboard() {
                 <table className="w-full text-sm text-left rtl:text-right text-muted-foreground">
                   <thead className="text-xs uppercase bg-muted/50 text-foreground font-display">
                     <tr>
-                      <th scope="col" className="px-4 py-3 rounded-tl-lg">Rank</th>
-                      <th scope="col" className="px-4 py-3">Player</th>
-                      <th scope="col" className="px-4 py-3 text-center">Goals</th>
-                      <th scope="col" className="px-4 py-3 text-right rounded-tr-lg">Matches</th>
+                      <th scope="col" className="px-2 py-2 rounded-tl-lg">#</th>
+                      <th scope="col" className="px-2 py-2">Player</th>
+                      <th scope="col" className="px-2 py-2 text-center">Goals</th>
+                      <th scope="col" className="px-2 py-2 text-right rounded-tr-lg">Matches</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -183,12 +183,12 @@ export default function Dashboard() {
                         className="border-b border-border/50 hover:bg-muted/50 transition-colors animate-in fade-in slide-in-from-left-2"
                         style={{ animationDelay: `${index * 50}ms`, animationFillMode: 'backwards' }}
                       >
-                        <td className="px-4 py-3 font-medium text-foreground">#{index + 1}</td>
-                        <td className="px-4 py-3 font-bold dark:text-white text-foreground">{stat.name}</td>
-                        <td className="px-4 py-3 text-center">
+                        <td className="px-2 py-2 font-medium text-foreground">{index + 1}</td>
+                        <td className="px-2 py-2 font-bold dark:text-white text-foreground">{stat.name}</td>
+                        <td className="px-2 py-2 text-center">
                           <span className="text-primary font-mono font-bold">{stat.goalsScored}</span>
                         </td>
-                        <td className="px-4 py-3 text-right text-muted-foreground">{stat.matchesPlayed}</td>
+                        <td className="px-2 py-2 text-right text-muted-foreground">{stat.matchesPlayed}</td>
                       </tr>
                     ))}
                     {topScorers.length === 0 && (
