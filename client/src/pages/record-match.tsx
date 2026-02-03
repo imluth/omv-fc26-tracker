@@ -134,7 +134,7 @@ export default function RecordMatch() {
                       <FormItem>
                         <FormLabel>Score</FormLabel>
                         <FormControl>
-                          <Input type="number" {...field} className="text-center text-3xl font-mono h-16 bg-background/50" />
+                          <Input type="number" {...field} className="text-center text-3xl font-mono h-16 bg-background/50 focus:shadow-[0_0_15px_rgba(34,197,94,0.3)] transition-shadow" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -143,7 +143,7 @@ export default function RecordMatch() {
                 </div>
 
                 {/* VS Divider */}
-                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-muted-foreground/20 font-display text-6xl font-black pointer-events-none italic z-0">
+                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-muted-foreground/10 font-display text-6xl font-black pointer-events-none italic z-0 animate-pulse">
                   VS
                 </div>
 
@@ -154,7 +154,7 @@ export default function RecordMatch() {
                     name="player2"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-blue-400 font-bold">Player 2 (Away)</FormLabel>
+                        <FormLabel className="text-orange-400 font-bold">Player 2 (Away)</FormLabel>
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <FormControl>
                             <SelectTrigger className="bg-background/50">
@@ -178,7 +178,7 @@ export default function RecordMatch() {
                       <FormItem>
                         <FormLabel>Score</FormLabel>
                         <FormControl>
-                          <Input type="number" {...field} className="text-center text-3xl font-mono h-16 bg-background/50" />
+                          <Input type="number" {...field} className="text-center text-3xl font-mono h-16 bg-background/50 focus:shadow-[0_0_15px_rgba(34,197,94,0.3)] transition-shadow" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
