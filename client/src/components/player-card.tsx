@@ -42,7 +42,14 @@ export function PlayerStatCard({ rank, name, initials, winRate, matches, classNa
         
         <div className="flex-1 min-w-0">
           <h3 className="font-display text-lg font-bold truncate dark:text-white text-foreground">{name}</h3>
-          <p className="text-xs text-muted-foreground">{matches} Matches</p>
+          <p className="text-xs text-muted-foreground mb-1.5">{matches} Matches</p>
+          {/* Win rate progress bar */}
+          <div className="h-1.5 w-full bg-muted/50 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-primary rounded-full transition-all duration-500"
+              style={{ width: `${winRate}%` }}
+            />
+          </div>
         </div>
 
         <div className="text-right">
