@@ -89,7 +89,11 @@ export default function Dashboard() {
                   </thead>
                   <tbody>
                     {stats.map((stat, index) => (
-                      <tr key={stat.id} className="border-b border-border/50 hover:bg-muted/50 transition-colors">
+                      <tr
+                        key={stat.id}
+                        className="border-b border-border/50 hover:bg-muted/50 transition-colors animate-in fade-in slide-in-from-left-2"
+                        style={{ animationDelay: `${index * 50}ms`, animationFillMode: 'backwards' }}
+                      >
                         <td className="px-4 py-3 font-medium text-foreground">#{index + 1}</td>
                         <td className="px-4 py-3 font-bold dark:text-white text-foreground">{stat.name}</td>
                         <td className="px-4 py-3 text-center">{stat.wins}-{stat.losses}</td>
@@ -137,7 +141,11 @@ export default function Dashboard() {
                   </thead>
                   <tbody>
                     {topScorers.map((stat, index) => (
-                      <tr key={stat.id} className="border-b border-border/50 hover:bg-muted/50 transition-colors">
+                      <tr
+                        key={stat.id}
+                        className="border-b border-border/50 hover:bg-muted/50 transition-colors animate-in fade-in slide-in-from-left-2"
+                        style={{ animationDelay: `${index * 50}ms`, animationFillMode: 'backwards' }}
+                      >
                         <td className="px-4 py-3 font-medium text-foreground">#{index + 1}</td>
                         <td className="px-4 py-3 font-bold dark:text-white text-foreground">{stat.name}</td>
                         <td className="px-4 py-3 text-center">
@@ -167,8 +175,12 @@ export default function Dashboard() {
              </CardHeader>
              <CardContent className="p-0">
                <div className="divide-y divide-border/50">
-                 {matches.map((match) => (
-                   <div key={match.id} className="p-4 flex items-center justify-between hover:bg-muted/50 transition-colors group">
+                 {matches.map((match, index) => (
+                   <div
+                     key={match.id}
+                     className="p-4 flex items-center justify-between hover:bg-muted/50 transition-colors group animate-in fade-in slide-in-from-right-2"
+                     style={{ animationDelay: `${index * 50}ms`, animationFillMode: 'backwards' }}
+                   >
                      <div className="flex flex-col gap-1 w-full">
                        <div className="flex items-center justify-between w-full">
                           <div className={cn("flex items-center gap-2", match.score1 > match.score2 ? "text-primary font-bold" : "text-muted-foreground")}>
