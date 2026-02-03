@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useStore } from "@/lib/api-store";
 import { formatDistanceToNow } from "date-fns";
-import { TrendingUp, History, Trash2, Flame, Snowflake } from "lucide-react";
+import { TrendingUp, History, Trash2, Flame, Snowflake, Crown, Target, Award, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
@@ -25,6 +25,32 @@ export default function Dashboard() {
   }, [stats]);
 
   const getPlayerName = (id: string) => players.find(p => p.id === id)?.name || "Unknown";
+
+  // Get achievement badges for a player
+  const getAchievements = (playerId: string, playerIndex: number) => {
+    const badges = [];
+    const player = stats.find(s => s.id === playerId);
+    if (!player) return badges;
+
+    // Crown: #1 in standings
+    if (playerIndex === 0 && player.matchesPlayed >= 3) {
+      badges.push({ icon: Crown, color: "text-yellow-500", title: "Champion" });
+    }
+    // Target: Top scorer
+    if (topScorers[0]?.id === playerId && player.goalsScored > 0) {
+      badges.push({ icon: Target, color: "text-primary", title: "Top Scorer" });
+    }
+    // Award: Veteran (20+ matches)
+    if (player.matchesPlayed >= 20) {
+      badges.push({ icon: Award, color: "text-purple-500", title: "Veteran" });
+    }
+    // Zap: High win rate (70%+) with min 5 matches
+    if (player.winRate >= 70 && player.matchesPlayed >= 5) {
+      badges.push({ icon: Zap, color: "text-amber-500", title: "Elite" });
+    }
+
+    return badges;
+  };
 
   const handleDeleteMatch = async (id: string) => {
     if (window.confirm("Delete this match record?")) {
@@ -95,7 +121,18 @@ export default function Dashboard() {
                         style={{ animationDelay: `${index * 50}ms`, animationFillMode: 'backwards' }}
                       >
                         <td className="px-4 py-3 font-medium text-foreground">#{index + 1}</td>
-                        <td className="px-4 py-3 font-bold dark:text-white text-foreground">{stat.name}</td>
+                        <td className="px-4 py-3 font-bold dark:text-white text-foreground">
+                          <div className="flex items-center gap-1.5">
+                            {stat.name}
+                            {getAchievements(stat.id, index).map((badge, i) => (
+                              <badge.icon
+                                key={i}
+                                className={cn("w-3.5 h-3.5", badge.color)}
+                                title={badge.title}
+                              />
+                            ))}
+                          </div>
+                        </td>
                         <td className="px-4 py-3 text-center">{stat.wins}-{stat.losses}</td>
                         <td className="px-4 py-3 text-right text-primary font-mono">{stat.winRate}%</td>
                         <td className="px-4 py-3 text-right">
