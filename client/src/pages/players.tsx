@@ -73,8 +73,12 @@ export default function Players() {
       )}
 
       <div className="grid grid-cols-1 gap-3">
-        {players.map((player) => (
-          <div key={player.id} className="flex items-center justify-between p-3 bg-card/30 border border-border/50 rounded-lg hover:border-primary/30 transition-colors group">
+        {players.map((player, index) => (
+          <div
+            key={player.id}
+            className="flex items-center justify-between p-3 bg-card/30 border border-border/50 rounded-lg hover:border-primary/30 hover:scale-[1.01] transition-all group animate-in fade-in slide-in-from-right-2"
+            style={{ animationDelay: `${index * 50}ms`, animationFillMode: 'backwards' }}
+          >
             <div className="flex items-center gap-3">
               <Avatar className="border border-border/50">
                 <AvatarFallback className="bg-secondary text-secondary-foreground font-bold">
