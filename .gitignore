@@ -13,5 +13,9 @@ vite.config.ts.*
 # WSL artifacts
 *:Zone.Identifier
 
+# Replit
+.replit
+replit.nix
+
 # Local directories
 .local/
