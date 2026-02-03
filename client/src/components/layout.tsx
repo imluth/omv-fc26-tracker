@@ -71,24 +71,32 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       {/* Bottom Navigation - Fixed to viewport */}
       <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-card/95 backdrop-blur-lg border-t border-x border-border/40 p-2 z-50 safe-area-bottom">
-        <ul className="flex justify-around items-center">
+        <ul className="flex justify-around items-center relative">
           {navItems.map((item) => {
             const isActive = location === item.href;
             return (
-              <li key={item.href}>
+              <li key={item.href} className="relative">
                 <Link href={item.href}>
                   <div
                     className={`flex flex-col items-center gap-1 p-2 rounded-lg transition-all duration-300 ${
                       isActive
                         ? "text-primary scale-110"
-                        : "text-muted-foreground hover:text-foreground"
+                        : "text-muted-foreground hover:text-foreground hover:scale-105 active:scale-95"
                     }`}
                   >
-                    <item.icon
-                      className={`w-6 h-6 ${isActive ? "drop-shadow-[0_0_8px_rgba(34,197,94,0.6)]" : ""}`}
-                      strokeWidth={isActive ? 2.5 : 2}
-                    />
+                    <div className="relative">
+                      <item.icon
+                        className={`w-6 h-6 transition-all duration-300 ${isActive ? "drop-shadow-[0_0_8px_rgba(34,197,94,0.6)]" : ""}`}
+                        strokeWidth={isActive ? 2.5 : 2}
+                      />
+                      {isActive && (
+                        <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full animate-pulse" />
+                      )}
+                    </div>
                     <span className="text-[10px] font-medium tracking-wide uppercase">{item.label}</span>
+                    {isActive && (
+                      <span className="absolute -top-1 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-primary rounded-full shadow-[0_0_8px_rgba(34,197,94,0.6)]" />
+                    )}
                   </div>
                 </Link>
               </li>
