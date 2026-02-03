@@ -9,6 +9,7 @@ import { TrendingUp, History, Trash2, Flame, Snowflake, Crown, Target, Award, Za
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { BadgeGuideModal } from "@/components/badge-guide-modal";
 
 export default function Dashboard() {
   const stats = useStats();
@@ -68,10 +69,13 @@ export default function Dashboard() {
       
       {/* Top 3 Section */}
       <section className="space-y-4">
-        <h2 className="text-xl font-display font-bold text-foreground flex items-center gap-2">
-          <TrendingUp className="text-primary w-5 h-5" />
-          Current Leaders
-        </h2>
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-display font-bold text-foreground flex items-center gap-2">
+            <TrendingUp className="text-primary w-5 h-5" />
+            Current Leaders
+          </h2>
+          <BadgeGuideModal />
+        </div>
         <div className="grid gap-3">
           {top3.map((stat, index) => (
             <PlayerStatCard
