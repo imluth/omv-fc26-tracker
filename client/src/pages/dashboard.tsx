@@ -73,7 +73,7 @@ export default function Dashboard() {
           <TabsTrigger value="history" className="font-display tracking-wider data-[state=active]:bg-card data-[state=active]:text-primary">RECENT MATCHES</TabsTrigger>
         </TabsList>
         
-        <TabsContent value="standings" className="mt-4">
+        <TabsContent value="standings" className="mt-4 animate-in fade-in slide-in-from-left-4 duration-300">
           <Card className="bg-card/30 border-border/50">
             <CardContent className="p-0">
               <div className="relative overflow-x-auto">
@@ -122,7 +122,7 @@ export default function Dashboard() {
           </Card>
         </TabsContent>
 
-        <TabsContent value="topscores" className="mt-4">
+        <TabsContent value="topscores" className="mt-4 animate-in fade-in slide-in-from-bottom-4 duration-300">
           <Card className="bg-card/30 border-border/50">
             <CardContent className="p-0">
               <div className="relative overflow-x-auto">
@@ -158,7 +158,7 @@ export default function Dashboard() {
           </Card>
         </TabsContent>
 
-        <TabsContent value="history" className="mt-4">
+        <TabsContent value="history" className="mt-4 animate-in fade-in slide-in-from-right-4 duration-300">
            <Card className="bg-card/30 border-border/50">
              <CardHeader className="pb-2 border-b border-border/50">
                 <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
