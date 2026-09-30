@@ -104,6 +104,37 @@ A sleek, mobile-first web application for tracking FIFA FC26 match results among
    - `SESSION_SECRET` - Random 32+ character string
 4. Deploy the stack
 
+## Backup & Season Reset
+
+`script/reset-season.sh` runs on the Docker host (the OMV box) against the
+running Portainer stack. It needs only `docker`; nothing is installed and the
+app keeps running throughout.
+
+```bash
+# Full database backup only (players, matches, admin users, sessions)
+sh script/reset-season.sh --backup-only
+
+# Start a new season: backup first, then clear all matches. Players are kept.
+# Asks you to type RESET before changing anything.
+sh script/reset-season.sh
+
+# Skip the confirmation prompt (for automation)
+sh script/reset-season.sh --yes
+```
+
+Dumps land in `./backups/fc26-<timestamp>.dump` (custom pg_dump format).
+Leaderboard, streaks, badges and history are all computed from the `matches`
+table, so clearing it resets every stat to zero.
+
+Restore a dump (works while the stack is running):
+
+```bash
+docker exec -i fc26-postgres pg_restore -U fc26 -d fc26_tracker --clean --if-exists < backups/<file>.dump
+```
+
+Override `PG_CONTAINER`, `PG_USER`, `PG_DB` or `BACKUP_DIR` via environment
+variables if your stack uses different names.
+
 ## Environment Variables
 
 | Variable | Description | Required |

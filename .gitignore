@@ -19,3 +19,5 @@ replit.nix
 
 # Local directories
 .local/
+# Database dumps from script/reset-season.sh
+backups/
