@@ -20,6 +20,7 @@ export interface Match {
 interface MatchStore {
   players: Player[];
   matches: Match[];
+  playerMatches: Match[];
   isAdmin: boolean;
   isLoading: boolean;
   error: string | null;
@@ -27,6 +28,7 @@ interface MatchStore {
   // Data fetching
   fetchPlayers: () => Promise<void>;
   fetchMatches: () => Promise<void>;
+  fetchPlayerMatches: (playerId: string) => Promise<void>;
   checkAuth: () => Promise<void>;
 
   // Auth actions
@@ -45,6 +47,7 @@ interface MatchStore {
 export const useStore = create<MatchStore>((set, get) => ({
   players: [],
   matches: [],
+  playerMatches: [],
   isAdmin: false,
   isLoading: false,
   error: null,
@@ -70,6 +73,19 @@ export const useStore = create<MatchStore>((set, get) => ({
     } catch (error) {
       console.error('Failed to fetch matches:', error);
       set({ error: 'Failed to fetch matches' });
+    }
+  },
+
+  fetchPlayerMatches: async (playerId: string) => {
+    try {
+      set({ isLoading: true });
+      const response = await fetch(`/api/matches/player/${playerId}`);
+      if (!response.ok) throw new Error('Failed to fetch player matches');
+      const playerMatches = await response.json();
+      set({ playerMatches, isLoading: false });
+    } catch (error) {
+      console.error('Failed to fetch player matches:', error);
+      set({ error: 'Failed to fetch player matches', isLoading: false });
     }
   },
 

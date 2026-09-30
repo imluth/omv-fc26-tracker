@@ -2,7 +2,7 @@ import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import { db } from "./db";
 import { adminUsers, players, matches } from "@shared/schema";
-import { eq, desc } from "drizzle-orm";
+import { eq, or, desc } from "drizzle-orm";
 import bcrypt from "bcrypt";
 
 // Extend express-session types
@@ -157,6 +157,26 @@ export async function registerRoutes(
       res.json(allMatches);
     } catch (error) {
       console.error("Get matches error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Get matches for a specific player
+  app.get("/api/matches/player/:playerId", async (req, res) => {
+    try {
+      const playerId = req.params.playerId as string;
+
+      const playerMatches = await db.query.matches.findMany({
+        where: or(
+          eq(matches.player1Id, playerId),
+          eq(matches.player2Id, playerId)
+        ),
+        orderBy: [desc(matches.timestamp)],
+      });
+
+      res.json(playerMatches);
+    } catch (error) {
+      console.error("Get player matches error:", error);
       res.status(500).json({ message: "Internal server error" });
     }
   });
