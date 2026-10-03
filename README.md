@@ -1,8 +1,8 @@
-# OMV FC26 Match Tracker
+# OMV FC Match Tracker
 
-A sleek, mobile-first web application for tracking FIFA FC26 match results among friends. Keep score of your gaming sessions with a beautiful leaderboard, player statistics, and match history.
+A sleek, mobile-first web application for tracking EA Sports FC match results among friends (currently branded for FC27). Keep score of your gaming sessions with a beautiful leaderboard, player statistics, and match history.
 
-![FC26 Tracker](attached_assets/generated_images/fc26_tracker_logo_icon.png)
+![FC Tracker](attached_assets/generated_images/fc_tracker_logo_icon.png)
 
 ## Features
 
@@ -134,6 +134,19 @@ docker exec -i fc26-postgres pg_restore -U fc26 -d fc26_tracker --clean --if-exi
 
 Override `PG_CONTAINER`, `PG_USER`, `PG_DB` or `BACKUP_DIR` via environment
 variables if your stack uses different names.
+
+## Bumping the Game Version
+
+All user-facing branding (header, page title, OpenGraph/Twitter meta tags) comes
+from one file: `shared/app-info.ts`. To move to the next EA Sports FC release:
+
+1. Change `GAME_VERSION` in `shared/app-info.ts` (e.g. `"FC27"` -> `"FC28"`).
+2. Replace `client/public/opengraph.jpg` with a new 1280x720 preview image, since
+   the version text is rendered into the image itself.
+
+Infrastructure names (`fc26-postgres`, the `fc26` DB user, Traefik router names)
+are deliberately left alone. Postgres only creates the role/database on the first
+boot of an empty volume, so renaming them would break the existing deployment.
 
 ## Environment Variables
 

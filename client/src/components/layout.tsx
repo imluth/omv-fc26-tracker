@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Toaster } from "@/components/ui/toaster";
 import { ModeToggle } from "@/components/mode-toggle";
 import bgImage from "@assets/generated_images/dark_abstract_soccer_background.png";
-import logoIcon from "@assets/generated_images/fc26_tracker_logo_icon.png";
+import logoIcon from "@assets/generated_images/fc_tracker_logo_icon.png";
+import { APP_NAME, GAME_VERSION, ORG_SHORT } from "@shared/app-info";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
@@ -54,9 +55,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         {/* Header */}
         <header className="flex items-center justify-between p-4 border-b border-border/40 bg-background/80 backdrop-blur-md sticky top-0 z-50">
           <div className="flex items-center gap-3">
-            <img src={logoIcon} alt="FC26" className="w-8 h-8 rounded-sm" />
+            <img src={logoIcon} alt={APP_NAME} className="w-8 h-8 rounded-sm" />
             <h1 className="text-xl font-bold tracking-wider dark:text-white text-foreground">
-              OMV FC26 <span className="text-primary text-glow">TRACKER</span>
+              {ORG_SHORT} {GAME_VERSION} <span className="text-primary text-glow">TRACKER</span>
             </h1>
           </div>
           <div className="flex items-center gap-1">

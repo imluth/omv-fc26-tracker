@@ -1,9 +1,22 @@
-import { defineConfig } from "vite";
+import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 import { metaImagesPlugin } from "./vite-plugin-meta-images";
+import { APP_NAME, APP_DESCRIPTION } from "./shared/app-info";
+
+/** Fills %APP_NAME% / %APP_DESCRIPTION% placeholders in index.html from shared/app-info.ts. */
+function appInfoPlugin(): Plugin {
+  return {
+    name: "vite-plugin-app-info",
+    transformIndexHtml(html) {
+      return html
+        .replaceAll("%APP_NAME%", APP_NAME)
+        .replaceAll("%APP_DESCRIPTION%", APP_DESCRIPTION);
+    },
+  };
+}
 
 export default defineConfig({
   plugins: [
@@ -11,6 +24,7 @@ export default defineConfig({
     runtimeErrorOverlay(),
     tailwindcss(),
     metaImagesPlugin(),
+    appInfoPlugin(),
     ...(process.env.NODE_ENV !== "production" &&
     process.env.REPL_ID !== undefined
       ? [
